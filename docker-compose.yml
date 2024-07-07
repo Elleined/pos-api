@@ -1,0 +1,51 @@
+version: "3"
+services:
+  pos_app:
+    build: .
+    image: elleined/pos_api
+    container_name: pos_app
+    restart: always
+    ports:
+      - "8065:8065"
+    environment:
+      - MYSQL_HOST=mysql_server
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=pos_db
+      - PORT=8065
+    networks:
+      - pos_network
+    depends_on:
+      mysql_server:
+        condition: service_healthy
+      redis_server:
+        condition: service_healthy
+
+  redis_server:
+    image: 'redis:latest'
+    container_name: redis_server
+    ports:
+      - '6379:6379'
+    networks:
+      - pos_network
+
+  mysql_server:
+    image: mysql:8.0.32
+    container_name: mysql_server
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=pos_db
+    healthcheck:
+      test: mysqladmin ping -h localhost -u root --password=$$MYSQL_ROOT_PASSWORD
+    ports:
+      - "3307:3306"
+    networks:
+      - pos_network
+
+networks:
+  pos_network:
+    name: pos_network
+    ipam:
+      driver: default
+    external: false
