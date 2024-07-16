@@ -47,6 +47,6 @@ public class Product extends PrimaryKeyIdentity {
     )
     private Category category;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "product")
     private List<OrderedProduct> orders;
 }

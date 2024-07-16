@@ -44,7 +44,7 @@ public class Order extends PrimaryKeyIdentity {
     )
     private Staff staff;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "order")
     private List<OrderedProduct> orderedProducts;
 
     public enum Status {
