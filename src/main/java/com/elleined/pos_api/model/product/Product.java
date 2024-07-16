@@ -1,7 +1,6 @@
 package com.elleined.pos_api.model.product;
 
 import com.elleined.pos_api.model.PrimaryKeyIdentity;
-import com.elleined.pos_api.model.order.Order;
 import com.elleined.pos_api.model.order.OrderedProduct;
 import jakarta.persistence.*;
 import lombok.Getter;
