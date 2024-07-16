@@ -14,6 +14,18 @@ public interface StaffMapper extends CustomMapper<Staff, StaffDTO> {
     @Mappings({
             @Mapping(target = "id", source = "id"),
             @Mapping(target = "createdAt", source = "createdAt"),
+            @Mapping(target = "name", source = "name"),
+            @Mapping(target = "status", source = "status"),
     })
     StaffDTO toDTO(Staff staff);
+
+    @Mappings({
+            @Mapping(target = "id", ignore = true),
+            @Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())"),
+            @Mapping(target = "name", source = "name"),
+
+            @Mapping(target = "status", source = "status"),
+            @Mapping(target = "orders", expression = "java(new java.util.ArrayList<>())")
+    })
+    Staff toEntity(String name, Staff.Status status);
 }
