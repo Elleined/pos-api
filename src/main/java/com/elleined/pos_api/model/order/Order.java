@@ -20,7 +20,7 @@ import java.util.List;
 public class Order extends PrimaryKeyIdentity {
 
     @Column(
-            name = "name",
+            name = "status",
             nullable = false
     )
     @Enumerated(EnumType.STRING)
