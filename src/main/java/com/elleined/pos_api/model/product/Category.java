@@ -1,16 +1,17 @@
 package com.elleined.pos_api.model.product;
 
 import com.elleined.pos_api.model.PrimaryKeyIdentity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import java.util.List;
+
+@Cacheable
+@org.hibernate.annotations.Cache(region = "categoryCache", usage = CacheConcurrencyStrategy.READ_WRITE)
 
 @Entity
 @Table(name = "tbl_category")
