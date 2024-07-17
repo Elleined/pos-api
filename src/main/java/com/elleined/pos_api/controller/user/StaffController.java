@@ -41,7 +41,7 @@ public class StaffController {
     }
 
     @GetMapping
-    public Page<StaffDTO> getAll(@RequestParam("status") Staff.Status status,
+    public Page<StaffDTO> getAll(@RequestParam(required = false, name = "status") Staff.Status status,
                                  @RequestParam(required = false, defaultValue = "1", value = "pageNumber") int pageNumber,
                                  @RequestParam(required = false, defaultValue = "5", value = "pageSize") int pageSize,
                                  @RequestParam(required = false, defaultValue = "ASC", value = "sortDirection") Sort.Direction direction,
