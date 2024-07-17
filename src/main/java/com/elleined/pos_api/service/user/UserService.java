@@ -7,6 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserService<T extends User> extends CustomService<T> {
     T save(String name);
-    T update(String name);
+    T update(T user, String name);
     Page<T> getAll(Pageable pageable);
 }

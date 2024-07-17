@@ -19,7 +19,7 @@ import java.math.BigDecimal;
                 OrderMapper.class
         }
 )
-public interface OrderProductMapper extends CustomMapper<OrderedProduct, OrderProductDTO> {
+public interface OrderedProductMapper extends CustomMapper<OrderedProduct, OrderProductDTO> {
 
     @Override
     @Mappings({

@@ -7,6 +7,10 @@ import org.springframework.data.domain.Pageable;
 
 public interface CategoryService extends CustomService<Category> {
     Page<Category> getAll(Pageable pageable);
+
     Category save(String name, String description);
-    void update(String name, String description);
+
+    void update(Category category,
+                String name,
+                String description);
 }

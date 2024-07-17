@@ -12,12 +12,14 @@ public interface ProductService extends CustomService<Product> {
 
     Page<Product> getAll(Category category, Pageable pageable);
 
-    Product save(String name,
+    Product save(Category category,
+                 String name,
                  String description,
                  String image,
                  BigDecimal price);
 
-    void update(String name,
+    void update(Product product,
+                String name,
                 String description,
                 String image,
                 BigDecimal price);
