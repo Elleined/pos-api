@@ -13,13 +13,13 @@ import java.util.List;
 
 @Getter
 @Setter
-public class OrderProductDTO extends DTO {
+public class OrderedProductDTO extends DTO {
     private BigDecimal productPriceAtTheTimePurchase;
     private ProductDTO productDTO;
     private OrderDTO orderDTO;
 
     @Builder
-    public OrderProductDTO(int id, LocalDateTime createdAt, BigDecimal productPriceAtTheTimePurchase, ProductDTO productDTO, OrderDTO orderDTO) {
+    public OrderedProductDTO(int id, LocalDateTime createdAt, BigDecimal productPriceAtTheTimePurchase, ProductDTO productDTO, OrderDTO orderDTO) {
         super(id, createdAt);
         this.productPriceAtTheTimePurchase = productPriceAtTheTimePurchase;
         this.productDTO = productDTO;
@@ -27,7 +27,7 @@ public class OrderProductDTO extends DTO {
     }
 
     @Override
-    public OrderProductDTO addLinks(boolean doInclude) {
+    public OrderedProductDTO addLinks(boolean doInclude) {
         super.addLinks(doInclude);
         return this;
     }

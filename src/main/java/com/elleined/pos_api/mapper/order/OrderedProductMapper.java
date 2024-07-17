@@ -1,6 +1,6 @@
 package com.elleined.pos_api.mapper.order;
 
-import com.elleined.pos_api.dto.order.OrderProductDTO;
+import com.elleined.pos_api.dto.order.OrderedProductDTO;
 import com.elleined.pos_api.mapper.CustomMapper;
 import com.elleined.pos_api.mapper.product.ProductMapper;
 import com.elleined.pos_api.model.order.Order;
@@ -19,7 +19,7 @@ import java.math.BigDecimal;
                 OrderMapper.class
         }
 )
-public interface OrderedProductMapper extends CustomMapper<OrderedProduct, OrderProductDTO> {
+public interface OrderedProductMapper extends CustomMapper<OrderedProduct, OrderedProductDTO> {
 
     @Override
     @Mappings({
@@ -30,7 +30,7 @@ public interface OrderedProductMapper extends CustomMapper<OrderedProduct, Order
             @Mapping(target = "productDTO", source = "product"),
             @Mapping(target = "orderDTO", source = "order")
     })
-    OrderProductDTO toDTO(OrderedProduct orderedProduct);
+    OrderedProductDTO toDTO(OrderedProduct orderedProduct);
 
     @Mappings({
             @Mapping(target = "id", ignore = true),
