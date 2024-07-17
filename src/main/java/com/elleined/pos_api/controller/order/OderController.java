@@ -23,19 +23,14 @@ public class OderController {
 
     @PostMapping
     public OrderDTO save(@RequestParam("staffId") int staffId,
-                         @RequestParam("customerId") int customerId) {
+                         @RequestParam("customerId") int customerId,
+                         @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
 
         Staff staff = staffService.getById(staffId);
         Customer customer = customerService.getById(customerId);
 
         Order order = orderService.save(staff, customer);
-        return orderMapper.toDTO(order);
-    }
-
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") int id) {
-        Order order = orderService.getById(id);
-        orderService.delete(order);
+        return orderMapper.toDTO(order).addLinks(includeRelatedLinks);
     }
 
     @PatchMapping("/{id}")
@@ -47,8 +42,10 @@ public class OderController {
     }
 
     @GetMapping("/{id}")
-    public OrderDTO getById(@PathVariable("id") int id) {
+    public OrderDTO getById(@PathVariable("id") int id,
+                            @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
+
         Order order = orderService.getById(id);
-        return orderMapper.toDTO(order);
+        return orderMapper.toDTO(order).addLinks(includeRelatedLinks);
     }
 }

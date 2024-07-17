@@ -47,6 +47,10 @@ public class Order extends PrimaryKeyIdentity {
     @OneToMany(mappedBy = "order")
     private List<OrderedProduct> orderedProducts;
 
+    public boolean has(OrderedProduct orderedProduct) {
+        return this.getOrderedProducts().contains(orderedProduct);
+    }
+
     public enum Status {
         PENDING,
         COMPLETED

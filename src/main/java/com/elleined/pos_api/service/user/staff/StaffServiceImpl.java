@@ -3,7 +3,6 @@ package com.elleined.pos_api.service.user.staff;
 import com.elleined.pos_api.exception.resource.ResourceNotFoundException;
 import com.elleined.pos_api.mapper.user.StaffMapper;
 import com.elleined.pos_api.model.user.Staff;
-import com.elleined.pos_api.model.user.User;
 import com.elleined.pos_api.repository.user.StaffRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

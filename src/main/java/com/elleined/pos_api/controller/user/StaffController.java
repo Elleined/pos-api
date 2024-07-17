@@ -25,7 +25,7 @@ public class StaffController {
     private final OrderMapper orderMapper;
 
     @GetMapping("/{id}/orders")
-    public Page<OrderDTO> getAll(@RequestParam("id") int staffId,
+    public Page<OrderDTO> getAll(@PathVariable("id") int staffId,
                                  @RequestParam(required = false, defaultValue = "1", value = "pageNumber") int pageNumber,
                                  @RequestParam(required = false, defaultValue = "5", value = "pageSize") int pageSize,
                                  @RequestParam(required = false, defaultValue = "ASC", value = "sortDirection") Sort.Direction direction,

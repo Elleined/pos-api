@@ -6,7 +6,6 @@ import com.elleined.pos_api.exception.order.OrderException;
 import com.elleined.pos_api.exception.product.ProductException;
 import com.elleined.pos_api.exception.resource.ResourceException;
 import com.elleined.pos_api.exception.user.UserException;
-import com.elleined.pos_api.model.product.Product;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;

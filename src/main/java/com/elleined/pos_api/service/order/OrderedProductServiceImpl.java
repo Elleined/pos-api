@@ -1,6 +1,7 @@
 package com.elleined.pos_api.service.order;
 
 import com.elleined.pos_api.exception.resource.ResourceNotFoundException;
+import com.elleined.pos_api.exception.resource.ResourceNotOwnedException;
 import com.elleined.pos_api.mapper.order.OrderedProductMapper;
 import com.elleined.pos_api.model.order.Order;
 import com.elleined.pos_api.model.order.OrderedProduct;
@@ -42,6 +43,9 @@ public class OrderedProductServiceImpl implements OrderedProductService {
 
     @Override
     public void delete(Order order, OrderedProduct orderedProduct) {
+        if (!order.has(orderedProduct))
+            throw new ResourceNotOwnedException("Cannot delete this ordered product! because this order doesn't have the specified ordered product.");
+
         order.getOrderedProducts().remove(orderedProduct);
 
         orderedProductRepository.delete(orderedProduct);
