@@ -49,7 +49,7 @@ public class CategoryController {
         categoryService.update(category, name, description);
     }
 
-    @PutMapping("/{id}")
+    @GetMapping("/{id}")
     public CategoryDTO getById(@PathVariable("id") int id,
                                @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
 
