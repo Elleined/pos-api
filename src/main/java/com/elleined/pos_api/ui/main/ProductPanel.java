@@ -38,6 +38,10 @@ public class ProductPanel extends javax.swing.JPanel {
             .addComponent(lblPicture, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        lblName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        lblPrice.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         taDescription.setEditable(false);
         taDescription.setColumns(20);
         taDescription.setRows(5);

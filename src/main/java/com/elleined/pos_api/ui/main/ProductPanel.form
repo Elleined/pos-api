@@ -95,8 +95,14 @@
       </SubComponents>
     </Container>
     <Component class="javax.swing.JLabel" name="lblName">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblPrice">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+      </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="tsScrollPanel">
       <AuxValues>
