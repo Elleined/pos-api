@@ -6,9 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 
 @SpringBootApplication
-public class MainFrame extends JFrame {
+public class POSFrame extends JFrame {
 
-    public MainFrame() throws HeadlessException {
+    public POSFrame() throws HeadlessException {
 
         setTitle("Main Frame");
         setVisible(true);

@@ -1,6 +1,6 @@
 package com.elleined.pos_api;
 
-import com.elleined.pos_api.ui.MainFrame;
+import com.elleined.pos_api.ui.POSFrame;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -15,10 +15,10 @@ import static org.springframework.data.web.config.EnableSpringDataWebSupport.Pag
 public class PosApiApplication {
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext ctx = new SpringApplicationBuilder(MainFrame.class)
+		ConfigurableApplicationContext ctx = new SpringApplicationBuilder(POSFrame.class)
 				.headless(false)
 				.run(args);
 
-		EventQueue.invokeLater(() -> ctx.getBean(MainFrame.class));
+		EventQueue.invokeLater(() -> ctx.getBean(POSFrame.class));
 	}
 }
