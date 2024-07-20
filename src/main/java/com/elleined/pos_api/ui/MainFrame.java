@@ -12,8 +12,7 @@ public class MainFrame extends JFrame {
 
         setTitle("Main Frame");
         setVisible(true);
-        setResizable(false);
-        setLocationRelativeTo(null);
+        setSize(Toolkit.getDefaultToolkit().getScreenSize());
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 }
