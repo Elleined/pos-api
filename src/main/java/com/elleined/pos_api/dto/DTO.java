@@ -1,18 +1,17 @@
 package com.elleined.pos_api.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public abstract class DTO extends HateoasDTO {
+@SuperBuilder
+@NoArgsConstructor
+public abstract class DTO {
     private int id;
     private LocalDateTime createdAt;
-
-    public DTO(int id, LocalDateTime createdAt) {
-        this.id = id;
-        this.createdAt = createdAt;
-    }
 }
