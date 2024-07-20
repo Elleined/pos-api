@@ -1,9 +1,34 @@
 package com.elleined.pos_api.ui.main;
 
+import com.elleined.pos_api.model.product.Product;
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+@Getter
 public class ProductPanel extends javax.swing.JPanel {
 
-    public ProductPanel() {
+    @Value("${image.path}")
+    private String imagePath;
+
+    private final Product product;
+
+    public ProductPanel(Product product) throws IOException {
+        this.product = product;
         initComponents();
+
+        Path image = Path.of(imagePath, product.getImage());
+        lblPicture.setIcon(new ImageIcon(new ImageIcon(Files.readAllBytes(image)).getImage().getScaledInstance(picturePanel.getWidth(), picturePanel.getHeight(), Image.SCALE_SMOOTH)));
+        lblName.setText(product.getName());
+        lblPrice.setText(String.valueOf(product.getPrice()));
+        taDescription.setText(product.getDescription());
+
+        setVisible(true);
     }
 
     @SuppressWarnings("unchecked")

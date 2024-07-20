@@ -57,6 +57,7 @@ public class OrderPanel extends javax.swing.JPanel {
         lblPrice.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPrice.setText("jLabel1");
 
+        btnDelete.setBackground(new java.awt.Color(204, 0, 51));
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteActionPerformed(evt);
