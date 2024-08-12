@@ -36,7 +36,7 @@ public class CategoryController {
                             @RequestParam("description") String description,
                             @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
 
-        Category category = categoryService.save(name, description);
+        Category category = categoryService.save(name, description, );
         return categoryMapper.toDTO(category).addLinks(includeRelatedLinks);
     }
 

@@ -73,7 +73,7 @@ public class StaffController {
     public StaffDTO save(@RequestParam("name") String name,
                          @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
 
-        Staff staff = staffService.save(name);
+        Staff staff = staffService.save(name, );
         return staffMapper.toDTO(staff).addLinks(includeRelatedLinks);
     }
 

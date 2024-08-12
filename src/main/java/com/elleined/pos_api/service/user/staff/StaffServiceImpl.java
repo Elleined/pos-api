@@ -2,6 +2,7 @@ package com.elleined.pos_api.service.user.staff;
 
 import com.elleined.pos_api.exception.resource.ResourceNotFoundException;
 import com.elleined.pos_api.mapper.user.StaffMapper;
+import com.elleined.pos_api.model.store.Store;
 import com.elleined.pos_api.model.user.Staff;
 import com.elleined.pos_api.repository.user.StaffRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,8 +41,8 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public Staff save(String name) {
-        Staff staff = staffMapper.toEntity(name, Staff.Status.ACTIVE, );
+    public Staff save(String name, Store store) {
+        Staff staff = staffMapper.toEntity(name, Staff.Status.ACTIVE, store);
 
         staffRepository.save(staff);
         log.debug("Saving staff success!");

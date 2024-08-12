@@ -61,7 +61,7 @@ public class CustomerController {
     public CustomerDTO save(@RequestParam("name") String name,
                             @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
 
-        Customer customer = customerService.save(name);
+        Customer customer = customerService.save(name, );
         return customerMapper.toDTO(customer).addLinks(includeRelatedLinks);
     }
 
