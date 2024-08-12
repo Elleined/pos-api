@@ -35,7 +35,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer save(String name) {
-        Customer customer = customerMapper.toEntity(name);
+        Customer customer = customerMapper.toEntity(name, );
 
         customerRepository.save(customer);
         log.debug("Saving customer success");

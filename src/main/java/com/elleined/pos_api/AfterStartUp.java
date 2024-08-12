@@ -52,15 +52,15 @@ public class AfterStartUp {
             return;
 
         Populator customerPopulator = () -> customerRepository.saveAll(List.of(
-                customerMapper.toEntity(faker.name().fullName()),
-                customerMapper.toEntity(faker.name().fullName()),
-                customerMapper.toEntity(faker.name().fullName()),
-                customerMapper.toEntity(faker.name().fullName())
+                customerMapper.toEntity(faker.name().fullName(), ),
+                customerMapper.toEntity(faker.name().fullName(), ),
+                customerMapper.toEntity(faker.name().fullName(), ),
+                customerMapper.toEntity(faker.name().fullName(), )
         ));
 
         Populator staffPopulator = () -> staffRepository.saveAll(List.of(
-                staffMapper.toEntity(faker.name().fullName(), Staff.Status.ACTIVE),
-                staffMapper.toEntity(faker.name().fullName(), Staff.Status.IN_ACTIVE)
+                staffMapper.toEntity(faker.name().fullName(), Staff.Status.ACTIVE, ),
+                staffMapper.toEntity(faker.name().fullName(), Staff.Status.IN_ACTIVE, )
         ));
 
         Populator categoryPopulator = () -> categoryRepository.saveAll(List.of(

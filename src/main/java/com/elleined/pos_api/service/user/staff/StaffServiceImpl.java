@@ -41,7 +41,7 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public Staff save(String name) {
-        Staff staff = staffMapper.toEntity(name, Staff.Status.ACTIVE);
+        Staff staff = staffMapper.toEntity(name, Staff.Status.ACTIVE, );
 
         staffRepository.save(staff);
         log.debug("Saving staff success!");
