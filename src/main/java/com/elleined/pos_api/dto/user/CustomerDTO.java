@@ -1,5 +1,6 @@
 package com.elleined.pos_api.dto.user;
 
+import com.elleined.pos_api.dto.store.StoreDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,8 +14,8 @@ import java.util.List;
 public class CustomerDTO extends UserDTO {
 
     @Builder
-    public CustomerDTO(int id, LocalDateTime createdAt, String name) {
-        super(id, createdAt, name);
+    public CustomerDTO(int id, LocalDateTime createdAt, String name, StoreDTO storeDTO) {
+        super(id, createdAt, name, storeDTO);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.elleined.pos_api.dto.user;
 
+import com.elleined.pos_api.dto.store.StoreDTO;
 import com.elleined.pos_api.model.user.Staff;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,8 +16,8 @@ public class StaffDTO extends UserDTO {
     private Staff.Status status;
 
     @Builder
-    public StaffDTO(int id, LocalDateTime createdAt, String name, Staff.Status status) {
-        super(id, createdAt, name);
+    public StaffDTO(int id, LocalDateTime createdAt, String name, StoreDTO storeDTO, Staff.Status status) {
+        super(id, createdAt, name, storeDTO);
         this.status = status;
     }
 
