@@ -3,6 +3,7 @@ package com.elleined.pos_api.service.product.category;
 import com.elleined.pos_api.exception.resource.ResourceNotFoundException;
 import com.elleined.pos_api.mapper.product.CategoryMapper;
 import com.elleined.pos_api.model.product.Category;
+import com.elleined.pos_api.model.store.Store;
 import com.elleined.pos_api.repository.product.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +28,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category save(String name, String description) {
-        Category category = categoryMapper.toEntity(name, description);
+    public Category save(String name, String description, Store store) {
+        Category category = categoryMapper.toEntity(name, description, store);
 
         categoryRepository.save(category);
         log.debug("Saving category success");
