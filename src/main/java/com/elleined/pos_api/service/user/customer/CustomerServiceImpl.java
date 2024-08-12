@@ -2,6 +2,7 @@ package com.elleined.pos_api.service.user.customer;
 
 import com.elleined.pos_api.exception.resource.ResourceNotFoundException;
 import com.elleined.pos_api.mapper.user.CustomerMapper;
+import com.elleined.pos_api.model.store.Store;
 import com.elleined.pos_api.model.user.Customer;
 import com.elleined.pos_api.repository.user.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,8 +35,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer save(String name) {
-        Customer customer = customerMapper.toEntity(name);
+    public Customer save(String name, Store store) {
+        Customer customer = customerMapper.toEntity(name, store);
 
         customerRepository.save(customer);
         log.debug("Saving customer success");

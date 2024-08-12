@@ -4,6 +4,7 @@ import com.elleined.pos_api.mapper.order.OrderMapper;
 import com.elleined.pos_api.mapper.order.OrderedProductMapper;
 import com.elleined.pos_api.mapper.product.CategoryMapper;
 import com.elleined.pos_api.mapper.product.ProductMapper;
+import com.elleined.pos_api.mapper.store.StoreMapper;
 import com.elleined.pos_api.mapper.user.CustomerMapper;
 import com.elleined.pos_api.mapper.user.StaffMapper;
 import com.elleined.pos_api.model.order.Order;
@@ -13,6 +14,7 @@ import com.elleined.pos_api.repository.order.OrderRepository;
 import com.elleined.pos_api.repository.order.OrderedProductRepository;
 import com.elleined.pos_api.repository.product.CategoryRepository;
 import com.elleined.pos_api.repository.product.ProductRepository;
+import com.elleined.pos_api.repository.store.StoreRepository;
 import com.elleined.pos_api.repository.user.CustomerRepository;
 import com.elleined.pos_api.repository.user.StaffRepository;
 import jakarta.annotation.PostConstruct;
@@ -32,6 +34,7 @@ import java.util.List;
 public class AfterStartUp {
     private final Faker faker;
 
+    private final StoreMapper storeMapper;
     private final CustomerMapper customerMapper;
     private final StaffMapper staffMapper;
     private final CategoryMapper categoryMapper;
@@ -39,6 +42,7 @@ public class AfterStartUp {
     private final OrderMapper orderMapper;
     private final OrderedProductMapper orderedProductMapper;
 
+    private final StoreRepository storeRepository;
     private final CustomerRepository customerRepository;
     private final StaffRepository staffRepository;
     private final CategoryRepository categoryRepository;
@@ -51,21 +55,25 @@ public class AfterStartUp {
         if (customerRepository.existsById(1))
             return;
 
+        Populator storePopulator = () -> storeRepository.saveAll(List.of(
+                storeMapper.toEntity(faker.company().name(), faker.address().fullAddress(), faker.phoneNumber().phoneNumber())
+        ));
+
         Populator customerPopulator = () -> customerRepository.saveAll(List.of(
-                customerMapper.toEntity(faker.name().fullName()),
-                customerMapper.toEntity(faker.name().fullName()),
-                customerMapper.toEntity(faker.name().fullName()),
-                customerMapper.toEntity(faker.name().fullName())
+                customerMapper.toEntity(faker.name().fullName(), storeRepository.findById(1).orElseThrow()),
+                customerMapper.toEntity(faker.name().fullName(), storeRepository.findById(1).orElseThrow()),
+                customerMapper.toEntity(faker.name().fullName(), storeRepository.findById(1).orElseThrow()),
+                customerMapper.toEntity(faker.name().fullName(), storeRepository.findById(1).orElseThrow())
         ));
 
         Populator staffPopulator = () -> staffRepository.saveAll(List.of(
-                staffMapper.toEntity(faker.name().fullName(), Staff.Status.ACTIVE),
-                staffMapper.toEntity(faker.name().fullName(), Staff.Status.IN_ACTIVE)
+                staffMapper.toEntity(faker.name().fullName(), Staff.Status.ACTIVE, storeRepository.findById(1).orElseThrow()),
+                staffMapper.toEntity(faker.name().fullName(), Staff.Status.IN_ACTIVE, storeRepository.findById(1).orElseThrow())
         ));
 
         Populator categoryPopulator = () -> categoryRepository.saveAll(List.of(
-                categoryMapper.toEntity(faker.name().fullName(), faker.lorem().sentence()),
-                categoryMapper.toEntity(faker.name().fullName(), faker.lorem().sentence())
+                categoryMapper.toEntity(faker.name().fullName(), faker.lorem().sentence(), storeRepository.findById(1).orElseThrow()),
+                categoryMapper.toEntity(faker.name().fullName(), faker.lorem().sentence(), storeRepository.findById(1).orElseThrow())
         ));
 
         Populator productPopulator = () -> productRepository.saveAll(List.of(
@@ -92,6 +100,7 @@ public class AfterStartUp {
         ));
 
         log.debug("Please wait saving default values...");
+        storePopulator.populate();
         customerPopulator.populate();
         staffPopulator.populate();
         categoryPopulator.populate();

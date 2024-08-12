@@ -1,7 +1,7 @@
-package com.elleined.pos_api.dto.product;
+package com.elleined.pos_api.dto.store;
 
 import com.elleined.pos_api.dto.DTO;
-import com.elleined.pos_api.dto.store.StoreDTO;
+import com.elleined.pos_api.dto.HateoasDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,22 +12,22 @@ import java.util.List;
 
 @Getter
 @Setter
-public class CategoryDTO extends DTO {
+public class StoreDTO extends DTO {
 
     private String name;
-    private String description;
-    private StoreDTO storeDTO;
+    private String address;
+    private String contactNumber;
 
     @Builder
-    public CategoryDTO(int id, LocalDateTime createdAt, String name, String description, StoreDTO storeDTO) {
+    public StoreDTO(int id, LocalDateTime createdAt, String name, String address, String contactNumber) {
         super(id, createdAt);
         this.name = name;
-        this.description = description;
-        this.storeDTO = storeDTO;
+        this.address = address;
+        this.contactNumber = contactNumber;
     }
 
     @Override
-    public CategoryDTO addLinks(boolean doInclude) {
+    public StoreDTO addLinks(boolean doInclude) {
         super.addLinks(doInclude);
         return this;
     }
