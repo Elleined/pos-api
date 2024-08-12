@@ -4,8 +4,10 @@ import com.elleined.pos_api.dto.order.OrderDTO;
 import com.elleined.pos_api.dto.user.CustomerDTO;
 import com.elleined.pos_api.mapper.order.OrderMapper;
 import com.elleined.pos_api.mapper.user.CustomerMapper;
+import com.elleined.pos_api.model.store.Store;
 import com.elleined.pos_api.model.user.Customer;
 import com.elleined.pos_api.service.order.OrderService;
+import com.elleined.pos_api.service.store.StoreService;
 import com.elleined.pos_api.service.user.customer.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,6 +27,8 @@ public class CustomerController {
 
     private final OrderService orderService;
     private final OrderMapper orderMapper;
+
+    private final StoreService storeService;
 
     @GetMapping("/{id}/orders")
     public Page<OrderDTO> getAll(@PathVariable("id") int customerId,
@@ -59,9 +63,12 @@ public class CustomerController {
 
     @PostMapping
     public CustomerDTO save(@RequestParam("name") String name,
+                            @RequestParam("storeId") int storeId,
                             @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
 
-        Customer customer = customerService.save(name, );
+        Store store = storeService.getById(storeId);
+        Customer customer = customerService.save(name, store);
+
         return customerMapper.toDTO(customer).addLinks(includeRelatedLinks);
     }
 

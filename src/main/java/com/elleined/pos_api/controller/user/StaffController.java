@@ -4,8 +4,10 @@ import com.elleined.pos_api.dto.order.OrderDTO;
 import com.elleined.pos_api.dto.user.StaffDTO;
 import com.elleined.pos_api.mapper.order.OrderMapper;
 import com.elleined.pos_api.mapper.user.StaffMapper;
+import com.elleined.pos_api.model.store.Store;
 import com.elleined.pos_api.model.user.Staff;
 import com.elleined.pos_api.service.order.OrderService;
+import com.elleined.pos_api.service.store.StoreService;
 import com.elleined.pos_api.service.user.staff.StaffService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,6 +25,8 @@ public class StaffController {
 
     private final OrderService orderService;
     private final OrderMapper orderMapper;
+
+    private final StoreService storeService;
 
     @GetMapping("/{id}/orders")
     public Page<OrderDTO> getAll(@PathVariable("id") int staffId,
@@ -71,9 +75,12 @@ public class StaffController {
 
     @PostMapping
     public StaffDTO save(@RequestParam("name") String name,
+                         @RequestParam("storeId") int storeId,
                          @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
 
-        Staff staff = staffService.save(name, );
+        Store store = storeService.getById(storeId);
+        Staff staff = staffService.save(name, store);
+
         return staffMapper.toDTO(staff).addLinks(includeRelatedLinks);
     }
 
