@@ -1,10 +1,8 @@
 package com.elleined.pos_api.model.product;
 
 import com.elleined.pos_api.model.PrimaryKeyIdentity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.elleined.pos_api.model.store.Store;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,6 +26,15 @@ public class Category extends PrimaryKeyIdentity {
 
     @Column(name = "description")
     private String description;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(
+            name = "store_id",
+            referencedColumnName = "id",
+            nullable = false,
+            updatable = false
+    )
+    private Store store;
 
     @OneToMany(mappedBy = "category")
     private List<Product> products;
