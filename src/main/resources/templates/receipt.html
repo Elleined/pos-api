@@ -99,10 +99,10 @@
 
         <th:block th:each="orderedProduct : ${orderedProducts}">
             <tr>
-                <td>1</td> <!--                <td th:text="${orderedProduct.quantity}"></td>-->
+                <td th:text="${orderedProduct.quantity}"></td>
                 <td th:text="${orderedProduct.product.name}"></td>
                 <td th:text="${orderedProduct.productPriceAtTheTimePurchase}"></td>
-                <td>1</td> <!--                <td th:text="${orderedProduct.productPriceAtTheTimePurchase}"></td> price * quantity-->
+                <td th:text="${orderedProduct.getAmount()}"></td>
             </tr>
         </th:block>
     </table>

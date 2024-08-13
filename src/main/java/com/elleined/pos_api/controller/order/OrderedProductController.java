@@ -1,6 +1,7 @@
 package com.elleined.pos_api.controller.order;
 
 import com.elleined.pos_api.dto.order.OrderedProductDTO;
+import com.elleined.pos_api.exception.resource.ResourceNotFoundException;
 import com.elleined.pos_api.mapper.order.OrderedProductMapper;
 import com.elleined.pos_api.model.order.Order;
 import com.elleined.pos_api.model.order.OrderedProduct;
@@ -44,12 +45,19 @@ public class OrderedProductController {
     @PostMapping
     public OrderedProductDTO save(@PathVariable("orderId") int orderId,
                                   @RequestParam("productId") int productId,
+                                  @RequestParam("quantity") int quantity,
                                   @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
 
         Order order = orderService.getById(orderId);
         Product product = productService.getById(productId);
 
-        OrderedProduct orderedProduct = orderedProductService.save(order, product);
+        if (order.has(product)) {
+            OrderedProduct orderedProduct = orderedProductService.getByProduct(order, product).orElseThrow(() -> new ResourceNotFoundException("Saving order failed! Cannot find ordered product!"));
+            orderedProductService.updateQuantity(orderedProduct);
+            return orderedProductMapper.toDTO(orderedProduct);
+        }
+
+        OrderedProduct orderedProduct = orderedProductService.save(order, product, quantity);
         return orderedProductMapper.toDTO(orderedProduct).addLinks(includeRelatedLinks);
     }
 

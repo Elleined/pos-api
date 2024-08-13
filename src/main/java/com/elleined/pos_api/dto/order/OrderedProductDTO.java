@@ -14,13 +14,15 @@ import java.util.List;
 @Getter
 @Setter
 public class OrderedProductDTO extends DTO {
+    private int quantity;
     private BigDecimal productPriceAtTheTimePurchase;
     private ProductDTO productDTO;
     private OrderDTO orderDTO;
 
     @Builder
-    public OrderedProductDTO(int id, LocalDateTime createdAt, BigDecimal productPriceAtTheTimePurchase, ProductDTO productDTO, OrderDTO orderDTO) {
+    public OrderedProductDTO(int id, LocalDateTime createdAt, int quantity, BigDecimal productPriceAtTheTimePurchase, ProductDTO productDTO, OrderDTO orderDTO) {
         super(id, createdAt);
+        this.quantity = quantity;
         this.productPriceAtTheTimePurchase = productPriceAtTheTimePurchase;
         this.productDTO = productDTO;
         this.orderDTO = orderDTO;

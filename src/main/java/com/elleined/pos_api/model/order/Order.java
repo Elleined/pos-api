@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -51,10 +52,21 @@ public class Order extends PrimaryKeyIdentity {
     public boolean has(OrderedProduct orderedProduct) {
         return this.getOrderedProducts().contains(orderedProduct);
     }
+    public boolean has(Product product) {
+        return this.getOrderedProducts().stream()
+                .map(OrderedProduct::getProduct)
+                .anyMatch(product::equals);
+    }
+
 
     public enum Status {
         PENDING,
         COMPLETED
     }
 
+    public BigDecimal getTotal() {
+        return this.getOrderedProducts().stream()
+                .map(OrderedProduct::getAmount)
+                .reduce(new BigDecimal(0), BigDecimal::add);
+    }
 }

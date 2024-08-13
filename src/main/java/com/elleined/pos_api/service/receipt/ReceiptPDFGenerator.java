@@ -32,9 +32,9 @@ public class ReceiptPDFGenerator {
 
         // amount = price * quantity of order
 
-        context.setVariable("totalAmount",  new BigDecimal(12)); // sum of all ordered products
+        context.setVariable("totalAmount", order.getTotal()); // sum of all ordered products
         context.setVariable("cash", cash);
-        context.setVariable("change", new BigDecimal(12));  // cash - totalAmount
+        context.setVariable("change", cash.subtract(order.getTotal()));  // cash - totalAmount
 
         String html = templateEngine.process("receipt.html", context);
 
