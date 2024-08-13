@@ -1,6 +1,7 @@
 package com.elleined.pos_api.model.order;
 
 import com.elleined.pos_api.model.PrimaryKeyIdentity;
+import com.elleined.pos_api.model.product.Product;
 import com.elleined.pos_api.model.user.Customer;
 import com.elleined.pos_api.model.user.Staff;
 import jakarta.persistence.*;
@@ -55,4 +56,5 @@ public class Order extends PrimaryKeyIdentity {
         PENDING,
         COMPLETED
     }
+
 }
