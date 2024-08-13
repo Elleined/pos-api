@@ -53,11 +53,16 @@ public class OrderedProductController {
 
         if (order.has(product)) {
             OrderedProduct orderedProduct = orderedProductService.getByProduct(order, product).orElseThrow(() -> new ResourceNotFoundException("Saving order failed! Cannot find ordered product!"));
-            orderedProductService.updateQuantity(orderedProduct);
+            int quan = quantity == 0
+                    ? orderedProduct.getQuantity() + 1
+                    : quantity;
+
+            orderedProductService.updateQuantity(orderedProduct, quan);
             return orderedProductMapper.toDTO(orderedProduct);
         }
 
-        OrderedProduct orderedProduct = orderedProductService.save(order, product, quantity);
+        int quan = quantity == 0 ? 1 : quantity;
+        OrderedProduct orderedProduct = orderedProductService.save(order, product, quan);
         return orderedProductMapper.toDTO(orderedProduct).addLinks(includeRelatedLinks);
     }
 

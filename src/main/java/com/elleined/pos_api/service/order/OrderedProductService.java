@@ -14,6 +14,6 @@ public interface OrderedProductService extends CustomService<OrderedProduct> {
     OrderedProduct save(Order order, Product product, int quantity);
     void delete(Order order, OrderedProduct orderedProduct);
 
-    void updateQuantity(OrderedProduct orderedProduct);
+    void updateQuantity(OrderedProduct orderedProduct, int quantity);
     Optional<OrderedProduct> getByProduct(Order order, Product product);
 }

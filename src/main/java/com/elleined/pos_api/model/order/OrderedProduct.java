@@ -20,8 +20,7 @@ public class OrderedProduct extends PrimaryKeyIdentity {
 
     @Column(
             name = "quantity",
-            nullable = false,
-            updatable = false
+            nullable = false
     )
     private int quantity;
 

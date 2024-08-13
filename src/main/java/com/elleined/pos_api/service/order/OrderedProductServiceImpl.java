@@ -52,8 +52,8 @@ public class OrderedProductServiceImpl implements OrderedProductService {
     }
 
     @Override
-    public void updateQuantity(OrderedProduct orderedProduct) {
-        orderedProduct.setQuantity(orderedProduct.getQuantity() + 1);
+    public void updateQuantity(OrderedProduct orderedProduct, int quantity) {
+        orderedProduct.setQuantity(quantity);
         orderedProductRepository.save(orderedProduct);
         log.debug("Updating quantity success.");
     }
