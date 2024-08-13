@@ -89,14 +89,14 @@ public class AfterStartUp {
         ));
 
         Populator orderedProductPopulator = () -> orderedProductRepository.saveAll(List.of(
-                orderedProductMapper.toEntity(new BigDecimal(faker.number().randomNumber()), productRepository.findById(1).orElseThrow(), orderRepository.findById(1).orElseThrow()),
-                orderedProductMapper.toEntity(new BigDecimal(faker.number().randomNumber()), productRepository.findById(1).orElseThrow(), orderRepository.findById(2).orElseThrow()),
-                orderedProductMapper.toEntity(new BigDecimal(faker.number().randomNumber()), productRepository.findById(2).orElseThrow(), orderRepository.findById(1).orElseThrow()),
-                orderedProductMapper.toEntity(new BigDecimal(faker.number().randomNumber()), productRepository.findById(2).orElseThrow(), orderRepository.findById(2).orElseThrow()),
-                orderedProductMapper.toEntity(new BigDecimal(faker.number().randomNumber()), productRepository.findById(3).orElseThrow(), orderRepository.findById(1).orElseThrow()),
-                orderedProductMapper.toEntity(new BigDecimal(faker.number().randomNumber()), productRepository.findById(3).orElseThrow(), orderRepository.findById(2).orElseThrow()),
-                orderedProductMapper.toEntity(new BigDecimal(faker.number().randomNumber()), productRepository.findById(4).orElseThrow(), orderRepository.findById(1).orElseThrow()),
-                orderedProductMapper.toEntity(new BigDecimal(faker.number().randomNumber()), productRepository.findById(4).orElseThrow(), orderRepository.findById(2).orElseThrow())
+                orderedProductMapper.toEntity(new BigDecimal(faker.number().randomNumber()), productRepository.findById(1).orElseThrow(), orderRepository.findById(1).orElseThrow(), (int) faker.number().randomNumber()),
+                orderedProductMapper.toEntity(new BigDecimal(faker.number().randomNumber()), productRepository.findById(1).orElseThrow(), orderRepository.findById(2).orElseThrow(), (int) faker.number().randomNumber()),
+                orderedProductMapper.toEntity(new BigDecimal(faker.number().randomNumber()), productRepository.findById(2).orElseThrow(), orderRepository.findById(1).orElseThrow(), (int) faker.number().randomNumber()),
+                orderedProductMapper.toEntity(new BigDecimal(faker.number().randomNumber()), productRepository.findById(2).orElseThrow(), orderRepository.findById(2).orElseThrow(), (int) faker.number().randomNumber()),
+                orderedProductMapper.toEntity(new BigDecimal(faker.number().randomNumber()), productRepository.findById(3).orElseThrow(), orderRepository.findById(1).orElseThrow(), (int) faker.number().randomNumber()),
+                orderedProductMapper.toEntity(new BigDecimal(faker.number().randomNumber()), productRepository.findById(3).orElseThrow(), orderRepository.findById(2).orElseThrow(), (int) faker.number().randomNumber()),
+                orderedProductMapper.toEntity(new BigDecimal(faker.number().randomNumber()), productRepository.findById(4).orElseThrow(), orderRepository.findById(1).orElseThrow(), (int) faker.number().randomNumber()),
+                orderedProductMapper.toEntity(new BigDecimal(faker.number().randomNumber()), productRepository.findById(4).orElseThrow(), orderRepository.findById(2).orElseThrow(), (int) faker.number().randomNumber())
         ));
 
         log.debug("Please wait saving default values...");
