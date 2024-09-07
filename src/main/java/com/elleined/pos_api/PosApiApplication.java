@@ -15,5 +15,4 @@ public class PosApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PosApiApplication.class, args);
 	}
-
 }

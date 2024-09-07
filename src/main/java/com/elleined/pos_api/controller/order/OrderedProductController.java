@@ -31,22 +31,19 @@ public class OrderedProductController {
                                           @RequestParam(required = false, defaultValue = "1", value = "pageNumber") int pageNumber,
                                           @RequestParam(required = false, defaultValue = "5", value = "pageSize") int pageSize,
                                           @RequestParam(required = false, defaultValue = "ASC", value = "sortDirection") Sort.Direction direction,
-                                          @RequestParam(required = false, defaultValue = "id", value = "sortBy") String sortBy,
-                                          @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
+                                          @RequestParam(required = false, defaultValue = "id", value = "sortBy") String sortBy) {
 
         Order order = orderService.getById(orderId);
 
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, direction, sortBy);
         return orderedProductService.getAll(order, pageable)
-                .map(orderedProductMapper::toDTO)
-                .map(dto -> dto.addLinks(includeRelatedLinks));
+                .map(orderedProductMapper::toDTO);
     }
 
     @PostMapping
     public OrderedProductDTO save(@PathVariable("orderId") int orderId,
                                   @RequestParam("productId") int productId,
-                                  @RequestParam("quantity") int quantity,
-                                  @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
+                                  @RequestParam("quantity") int quantity) {
 
         Order order = orderService.getById(orderId);
         Product product = productService.getById(productId);
@@ -63,7 +60,7 @@ public class OrderedProductController {
 
         int quan = quantity == 0 ? 1 : quantity;
         OrderedProduct orderedProduct = orderedProductService.save(order, product, quan);
-        return orderedProductMapper.toDTO(orderedProduct).addLinks(includeRelatedLinks);
+        return orderedProductMapper.toDTO(orderedProduct);
     }
 
     @DeleteMapping("/{id}")
@@ -77,10 +74,8 @@ public class OrderedProductController {
     }
 
     @GetMapping("/{id}")
-    public OrderedProductDTO getById(@PathVariable("id") int id,
-                                     @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
-
+    public OrderedProductDTO getById(@PathVariable("id") int id) {
         OrderedProduct orderedProduct = orderedProductService.getById(id);
-        return orderedProductMapper.toDTO(orderedProduct).addLinks(includeRelatedLinks);
+        return orderedProductMapper.toDTO(orderedProduct);
     }
 }

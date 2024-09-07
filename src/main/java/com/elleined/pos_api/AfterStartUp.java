@@ -8,7 +8,6 @@ import com.elleined.pos_api.mapper.store.StoreMapper;
 import com.elleined.pos_api.mapper.user.CustomerMapper;
 import com.elleined.pos_api.mapper.user.StaffMapper;
 import com.elleined.pos_api.model.order.Order;
-import com.elleined.pos_api.model.user.Staff;
 import com.elleined.pos_api.populator.Populator;
 import com.elleined.pos_api.repository.order.OrderRepository;
 import com.elleined.pos_api.repository.order.OrderedProductRepository;
@@ -21,6 +20,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.datafaker.Faker;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +33,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AfterStartUp {
     private final Faker faker;
+    private final PasswordEncoder passwordEncoder;
 
     private final StoreMapper storeMapper;
     private final CustomerMapper customerMapper;
@@ -67,8 +68,8 @@ public class AfterStartUp {
         ));
 
         Populator staffPopulator = () -> staffRepository.saveAll(List.of(
-                staffMapper.toEntity(faker.name().fullName(), Staff.Status.ACTIVE, storeRepository.findById(1).orElseThrow()),
-                staffMapper.toEntity(faker.name().fullName(), Staff.Status.IN_ACTIVE, storeRepository.findById(1).orElseThrow())
+                staffMapper.toEntity(faker.name().fullName(), storeRepository.findById(1).orElseThrow(), faker.bothify("##??@gmail.com"), passwordEncoder.encode("user")),
+                staffMapper.toEntity(faker.name().fullName(), storeRepository.findById(1).orElseThrow(), faker.bothify("##??@gmail.com"), passwordEncoder.encode("user"))
         ));
 
         Populator categoryPopulator = () -> categoryRepository.saveAll(List.of(

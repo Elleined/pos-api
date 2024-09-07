@@ -13,7 +13,8 @@ import org.mapstruct.Mappings;
         componentModel = "spring",
         uses = {
                 StoreMapper.class
-        }
+        },
+        imports = Staff.Status.class
 )
 public interface StaffMapper extends CustomMapper<Staff, StaffDTO> {
 
@@ -22,6 +23,7 @@ public interface StaffMapper extends CustomMapper<Staff, StaffDTO> {
             @Mapping(target = "id", source = "id"),
             @Mapping(target = "createdAt", source = "createdAt"),
             @Mapping(target = "name", source = "name"),
+            @Mapping(target = "email", source = "email"),
             @Mapping(target = "storeDTO", source = "store"),
 
             @Mapping(target = "status", source = "status"),
@@ -32,10 +34,15 @@ public interface StaffMapper extends CustomMapper<Staff, StaffDTO> {
             @Mapping(target = "id", ignore = true),
             @Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())"),
             @Mapping(target = "name", source = "name"),
+            @Mapping(target = "email", source = "email"),
+            @Mapping(target = "password", source = "password"),
             @Mapping(target = "store", source = "store"),
 
-            @Mapping(target = "status", source = "status"),
+            @Mapping(target = "status", expression = "java(Status.ACTIVE)"),
             @Mapping(target = "orders", expression = "java(new java.util.ArrayList<>())")
     })
-    Staff toEntity(String name, Staff.Status status, Store store);
+    Staff toEntity(String name,
+                   Store store,
+                   String email,
+                   String password);
 }

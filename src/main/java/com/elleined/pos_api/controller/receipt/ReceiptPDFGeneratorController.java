@@ -2,8 +2,8 @@ package com.elleined.pos_api.controller.receipt;
 
 import com.elleined.pos_api.model.order.Order;
 import com.elleined.pos_api.model.store.Store;
-import com.elleined.pos_api.service.receipt.ReceiptPDFGenerator;
 import com.elleined.pos_api.service.order.OrderService;
+import com.elleined.pos_api.service.receipt.ReceiptPDFGenerator;
 import com.elleined.pos_api.service.store.StoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
