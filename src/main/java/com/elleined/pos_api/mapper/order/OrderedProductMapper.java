@@ -26,6 +26,7 @@ public interface OrderedProductMapper extends CustomMapper<OrderedProduct, Order
             @Mapping(target = "id", source = "id"),
             @Mapping(target = "createdAt", source = "createdAt"),
 
+            @Mapping(target = "quantity", source = "quantity"),
             @Mapping(target = "productPriceAtTheTimePurchase", source = "productPriceAtTheTimePurchase"),
             @Mapping(target = "productDTO", source = "product"),
             @Mapping(target = "orderDTO", source = "order")
@@ -36,11 +37,13 @@ public interface OrderedProductMapper extends CustomMapper<OrderedProduct, Order
             @Mapping(target = "id", ignore = true),
             @Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())"),
 
+            @Mapping(target = "quantity", source = "quantity"),
             @Mapping(target = "productPriceAtTheTimePurchase", source = "productPriceAtTheTimePurchase"),
             @Mapping(target = "product", source = "product"),
             @Mapping(target = "order", source = "order")
     })
     OrderedProduct toEntity(BigDecimal productPriceAtTheTimePurchase,
                             Product product,
-                            Order order);
+                            Order order,
+                            int quantity);
 }

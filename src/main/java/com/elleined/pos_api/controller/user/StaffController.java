@@ -4,10 +4,8 @@ import com.elleined.pos_api.dto.order.OrderDTO;
 import com.elleined.pos_api.dto.user.StaffDTO;
 import com.elleined.pos_api.mapper.order.OrderMapper;
 import com.elleined.pos_api.mapper.user.StaffMapper;
-import com.elleined.pos_api.model.store.Store;
 import com.elleined.pos_api.model.user.Staff;
 import com.elleined.pos_api.service.order.OrderService;
-import com.elleined.pos_api.service.store.StoreService;
 import com.elleined.pos_api.service.user.staff.StaffService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,22 +24,18 @@ public class StaffController {
     private final OrderService orderService;
     private final OrderMapper orderMapper;
 
-    private final StoreService storeService;
-
-    @GetMapping("/{id}/orders")
-    public Page<OrderDTO> getAll(@PathVariable("id") int staffId,
+    @GetMapping("/orders")
+    public Page<OrderDTO> getAll(@RequestHeader("Authorization") String jwt,
                                  @RequestParam(required = false, defaultValue = "1", value = "pageNumber") int pageNumber,
                                  @RequestParam(required = false, defaultValue = "5", value = "pageSize") int pageSize,
                                  @RequestParam(required = false, defaultValue = "ASC", value = "sortDirection") Sort.Direction direction,
-                                 @RequestParam(required = false, defaultValue = "id", value = "sortBy") String sortBy,
-                                 @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
+                                 @RequestParam(required = false, defaultValue = "id", value = "sortBy") String sortBy) {
 
-        Staff staff = staffService.getById(staffId);
+        Staff staff = staffService.getByJWT(jwt);
 
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, direction, sortBy);
         return orderService.getAll(staff, pageable)
-                .map(orderMapper::toDTO)
-                .map(dto -> dto.addLinks(includeRelatedLinks));
+                .map(orderMapper::toDTO);
     }
 
     @GetMapping
@@ -49,20 +43,16 @@ public class StaffController {
                                  @RequestParam(required = false, defaultValue = "1", value = "pageNumber") int pageNumber,
                                  @RequestParam(required = false, defaultValue = "5", value = "pageSize") int pageSize,
                                  @RequestParam(required = false, defaultValue = "ASC", value = "sortDirection") Sort.Direction direction,
-                                 @RequestParam(required = false, defaultValue = "id", value = "sortBy") String sortBy,
-                                 @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
+                                 @RequestParam(required = false, defaultValue = "id", value = "sortBy") String sortBy) {
 
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, direction, sortBy);
 
         if (status == null)
             return staffService.getAll(pageable)
-                    .map(staffMapper::toDTO)
-                    .map(dto -> dto.addLinks(includeRelatedLinks));
-
+                    .map(staffMapper::toDTO);
 
         return staffService.getAll(status, pageable)
-                .map(staffMapper::toDTO)
-                .map(dto -> dto.addLinks(includeRelatedLinks));
+                .map(staffMapper::toDTO);
     }
 
     @PatchMapping("/{id}")
@@ -73,33 +63,10 @@ public class StaffController {
         staffService.updateStatus(staff, status);
     }
 
-    @PostMapping
-    public StaffDTO save(@RequestParam("name") String name,
-                         @RequestParam("storeId") int storeId,
-                         @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
-
-        Store store = storeService.getById(storeId);
-        Staff staff = staffService.save(name, store);
-
-        return staffMapper.toDTO(staff).addLinks(includeRelatedLinks);
-    }
-
-    @PutMapping("/{id}")
-    public StaffDTO update(@PathVariable("id") int staffId,
-                           @RequestParam("name") String name,
-                           @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
-
-        Staff staff = staffService.getById(staffId);
-
-        staffService.update(staff, name);
-        return staffMapper.toDTO(staff).addLinks(includeRelatedLinks);
-    }
-
     @GetMapping("/{id}")
-    public StaffDTO getById(@PathVariable("id") int staffId,
-                            @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
+    public StaffDTO getById(@PathVariable("id") int staffId) {
 
         Staff staff = staffService.getById(staffId);
-        return staffMapper.toDTO(staff).addLinks(includeRelatedLinks);
+        return staffMapper.toDTO(staff);
     }
 }

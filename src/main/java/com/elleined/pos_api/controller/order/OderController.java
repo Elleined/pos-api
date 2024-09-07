@@ -22,15 +22,14 @@ public class OderController {
     private final StaffService staffService;
 
     @PostMapping
-    public OrderDTO save(@RequestParam("staffId") int staffId,
-                         @RequestParam("customerId") int customerId,
-                         @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
+    public OrderDTO save(@RequestHeader("Authorization") String jwt,
+                         @RequestParam("customerId") int customerId) {
 
-        Staff staff = staffService.getById(staffId);
+        Staff staff = staffService.getByJWT(jwt );
         Customer customer = customerService.getById(customerId);
 
         Order order = orderService.save(staff, customer);
-        return orderMapper.toDTO(order).addLinks(includeRelatedLinks);
+        return orderMapper.toDTO(order);
     }
 
     @PatchMapping("/{id}")
@@ -42,10 +41,9 @@ public class OderController {
     }
 
     @GetMapping("/{id}")
-    public OrderDTO getById(@PathVariable("id") int id,
-                            @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
+    public OrderDTO getById(@PathVariable("id") int id) {
 
         Order order = orderService.getById(id);
-        return orderMapper.toDTO(order).addLinks(includeRelatedLinks);
+        return orderMapper.toDTO(order);
     }
 }

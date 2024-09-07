@@ -35,15 +35,13 @@ public class CustomerController {
                                  @RequestParam(required = false, defaultValue = "1", value = "pageNumber") int pageNumber,
                                  @RequestParam(required = false, defaultValue = "5", value = "pageSize") int pageSize,
                                  @RequestParam(required = false, defaultValue = "ASC", value = "sortDirection") Sort.Direction direction,
-                                 @RequestParam(required = false, defaultValue = "id", value = "sortBy") String sortBy,
-                                 @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
+                                 @RequestParam(required = false, defaultValue = "id", value = "sortBy") String sortBy) {
 
         Customer customer = customerService.getById(customerId);
 
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, direction, sortBy);
         return orderService.getAll(customer, pageable)
-                .map(orderMapper::toDTO)
-                .map(dto -> dto.addLinks(includeRelatedLinks));
+                .map(orderMapper::toDTO);
     }
 
     @GetMapping("/ranged")
@@ -52,55 +50,48 @@ public class CustomerController {
                                     @RequestParam(required = false, defaultValue = "1", value = "pageNumber") int pageNumber,
                                     @RequestParam(required = false, defaultValue = "5", value = "pageSize") int pageSize,
                                     @RequestParam(required = false, defaultValue = "ASC", value = "sortDirection") Sort.Direction direction,
-                                    @RequestParam(required = false, defaultValue = "id", value = "sortBy") String sortBy,
-                                    @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
+                                    @RequestParam(required = false, defaultValue = "id", value = "sortBy") String sortBy) {
 
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, direction, sortBy);
         return customerService.getAll(start, end, pageable)
-                .map(customerMapper::toDTO)
-                .map(dto -> dto.addLinks(includeRelatedLinks));
+                .map(customerMapper::toDTO);
     }
 
     @PostMapping
     public CustomerDTO save(@RequestParam("name") String name,
-                            @RequestParam("storeId") int storeId,
-                            @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
+                            @RequestParam("storeId") int storeId) {
 
         Store store = storeService.getById(storeId);
         Customer customer = customerService.save(name, store);
 
-        return customerMapper.toDTO(customer).addLinks(includeRelatedLinks);
+        return customerMapper.toDTO(customer);
     }
 
     @PutMapping("/{id}")
     public CustomerDTO update(@PathVariable("id") int customerId,
-                              @RequestParam("name") String name,
-                              @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
+                              @RequestParam("name") String name) {
 
         Customer customer = customerService.getById(customerId);
 
         customerService.update(customer, name);
-        return customerMapper.toDTO(customer).addLinks(includeRelatedLinks);
+        return customerMapper.toDTO(customer);
     }
 
     @GetMapping
     public Page<CustomerDTO> getAll(@RequestParam(required = false, defaultValue = "1", value = "pageNumber") int pageNumber,
                                     @RequestParam(required = false, defaultValue = "5", value = "pageSize") int pageSize,
                                     @RequestParam(required = false, defaultValue = "ASC", value = "sortDirection") Sort.Direction direction,
-                                    @RequestParam(required = false, defaultValue = "id", value = "sortBy") String sortBy,
-                                    @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
+                                    @RequestParam(required = false, defaultValue = "id", value = "sortBy") String sortBy) {
 
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, direction, sortBy);
         return customerService.getAll(pageable)
-                .map(customerMapper::toDTO)
-                .map(dto -> dto.addLinks(includeRelatedLinks));
+                .map(customerMapper::toDTO);
     }
 
     @GetMapping("/{id}")
-    public CustomerDTO getById(@PathVariable("id") int id,
-                               @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
+    public CustomerDTO getById(@PathVariable("id") int id) {
 
         Customer customer = customerService.getById(id);
-        return customerMapper.toDTO(customer).addLinks(includeRelatedLinks);
+        return customerMapper.toDTO(customer);
     }
 }

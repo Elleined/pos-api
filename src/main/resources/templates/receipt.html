@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .receipt {
+            width: 300px;
+            padding: 20px;
+            background: white;
+            border: 1px solid #000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .receipt h1 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .receipt p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .receipt .details, .receipt .totals {
+            width: 100%;
+            margin: 15px 0;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .receipt .details th, .receipt .details td, .receipt .totals td {
+            padding: 3px 0;
+        }
+
+        .receipt .details th {
+            text-align: left;
+        }
+
+        .receipt .totals {
+            border-top: 1px dashed #000;
+            padding-top: 10px;
+        }
+
+        .receipt .totals td {
+            text-align: right;
+        }
+
+        .receipt .totals td:first-child {
+            text-align: left;
+        }
+
+        .receipt .message {
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="receipt">
+    <h1 th:text="${store.name}"></h1>
+    <p th:text="${store.address}"></p>
+    <p th:text="${store.contactNumber}"></p>
+
+    <table class="details">
+        <tr>
+            <th>Invoice No :</th>
+            <td th:text="${order.id}"></td>
+            <th>Date :</th>
+            <td th:text="${createdAt}"></td>
+        </tr>
+        <tr>
+            <th>Cashier :</th>
+            <td th:text="${order.staff.name}"></td>
+        </tr>
+    </table>
+
+    <table class="details" border="1" cellspacing="0" cellpadding="5">
+        <tr>
+            <th>Qty</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Amount</th>
+        </tr>
+
+        <th:block th:each="orderedProduct : ${orderedProducts}">
+            <tr>
+                <td th:text="${orderedProduct.quantity}"></td>
+                <td th:text="${orderedProduct.product.name}"></td>
+                <td th:text="${orderedProduct.productPriceAtTheTimePurchase}"></td>
+                <td th:text="${orderedProduct.getAmount()}"></td>
+            </tr>
+        </th:block>
+    </table>
+
+    <table class="totals">
+        <tr>
+            <td>Total Amount :</td>
+            <td th:text="${totalAmount}"></td>
+        </tr>
+        <tr>
+            <td>Cash :</td>
+            <td th:text="${cash}"></td>
+        </tr>
+        <tr>
+            <td>Change :</td>
+            <td th:text="${change}"></td>
+        </tr>
+    </table>
+
+    <p class="message">THIS IS YOUR OFFICIAL RECEIPT</p>
+    <p>Thank You Come Again!</p>
+</div>
+</body>
+</html>
