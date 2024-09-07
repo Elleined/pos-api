@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
-import java.math.BigDecimal;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -32,9 +32,8 @@ public class OrderedProductServiceImpl implements OrderedProductService {
     }
 
     @Override
-    public OrderedProduct save(Order order, Product product) {
-        BigDecimal currentProductPrice = product.getPrice();
-        OrderedProduct orderedProduct = orderedProductMapper.toEntity(currentProductPrice, product, order);
+    public OrderedProduct save(Order order, Product product, int quantity) {
+        OrderedProduct orderedProduct = orderedProductMapper.toEntity(product.getPrice(), product, order, quantity);
 
         orderedProductRepository.save(orderedProduct);
         log.debug("Saving ordered product success.");
@@ -50,6 +49,20 @@ public class OrderedProductServiceImpl implements OrderedProductService {
 
         orderedProductRepository.delete(orderedProduct);
         log.debug("Ordered product deleted.");
+    }
+
+    @Override
+    public void updateQuantity(OrderedProduct orderedProduct, int quantity) {
+        orderedProduct.setQuantity(quantity);
+        orderedProductRepository.save(orderedProduct);
+        log.debug("Updating quantity success.");
+    }
+
+    @Override
+    public Optional<OrderedProduct> getByProduct(Order order, Product product) {
+        return order.getOrderedProducts().stream()
+                .filter(orderedProduct -> orderedProduct.getProduct().equals(product))
+                .findFirst();
     }
 
     @Override

@@ -23,6 +23,12 @@ import java.math.BigDecimal;
 public class OrderedProduct extends PrimaryKeyIdentity {
 
     @Column(
+            name = "quantity",
+            nullable = false
+    )
+    private int quantity;
+
+    @Column(
             name = "product_price_at_the_time_of_purchase",
             nullable = false
     )
@@ -45,4 +51,8 @@ public class OrderedProduct extends PrimaryKeyIdentity {
             updatable = false
     )
     private Order order;
+
+    public BigDecimal getAmount() {
+        return productPriceAtTheTimePurchase.multiply(new BigDecimal(quantity));
+    }
 }

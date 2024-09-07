@@ -26,24 +26,21 @@ public class CategoryController {
     public Page<CategoryDTO> getAll(@RequestParam(required = false, defaultValue = "1", value = "pageNumber") int pageNumber,
                                     @RequestParam(required = false, defaultValue = "5", value = "pageSize") int pageSize,
                                     @RequestParam(required = false, defaultValue = "ASC", value = "sortDirection") Sort.Direction direction,
-                                    @RequestParam(required = false, defaultValue = "id", value = "sortBy") String sortBy,
-                                    @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
+                                    @RequestParam(required = false, defaultValue = "id", value = "sortBy") String sortBy) {
 
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, direction, sortBy);
         return categoryService.getAll(pageable)
-                .map(categoryMapper::toDTO)
-                .map(dto -> dto.addLinks(includeRelatedLinks));
+                .map(categoryMapper::toDTO);
     }
 
     @PostMapping
     public CategoryDTO save(@RequestParam("name") String name,
                             @RequestParam("description") String description,
-                            @RequestParam("storeId") int storeId,
-                            @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
+                            @RequestParam("storeId") int storeId) {
 
         Store store = storeService.getById(storeId);
         Category category = categoryService.save(name, description, store);
-        return categoryMapper.toDTO(category).addLinks(includeRelatedLinks);
+        return categoryMapper.toDTO(category);
     }
 
     @PutMapping("/{id}")
@@ -56,10 +53,9 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public CategoryDTO getById(@PathVariable("id") int id,
-                               @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
+    public CategoryDTO getById(@PathVariable("id") int id) {
 
         Category category = categoryService.getById(id);
-        return categoryMapper.toDTO(category).addLinks(includeRelatedLinks);
+        return categoryMapper.toDTO(category);
     }
 }

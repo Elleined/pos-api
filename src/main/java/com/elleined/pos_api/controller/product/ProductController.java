@@ -29,15 +29,13 @@ public class ProductController {
                                    @RequestParam(required = false, defaultValue = "1", value = "pageNumber") int pageNumber,
                                    @RequestParam(required = false, defaultValue = "5", value = "pageSize") int pageSize,
                                    @RequestParam(required = false, defaultValue = "ASC", value = "sortDirection") Sort.Direction direction,
-                                   @RequestParam(required = false, defaultValue = "id", value = "sortBy") String sortBy,
-                                   @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
+                                   @RequestParam(required = false, defaultValue = "id", value = "sortBy") String sortBy) {
 
         Category category = categoryService.getById(categoryId);
 
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, direction, sortBy);
         return productService.getAll(category, pageable)
-                .map(productMapper::toDTO)
-                .map(dto -> dto.addLinks(includeRelatedLinks));
+                .map(productMapper::toDTO);
     }
 
     @PostMapping
@@ -65,8 +63,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ProductDTO getById(@PathVariable("id") int id,
-                              @RequestParam(defaultValue = "false", name = "includeRelatedLinks") boolean includeRelatedLinks) {
+    public ProductDTO getById(@PathVariable("id") int id) {
 
         Product product = productService.getById(id);
         return productMapper.toDTO(product);

@@ -6,8 +6,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 public interface StaffRepository extends UserRepository<Staff> {
 
     @Query("SELECT s FROM Staff s WHERE s.status = :status")
     Page<Staff> findAll(@Param("status") Staff.Status status, Pageable pageable);
+
+
+    @Query("SELECT s FROM Staff s WHERE s.email = :email")
+    Optional<Staff> findByEmail(@Param("email") String email);
 }
