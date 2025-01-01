@@ -1,19 +1,12 @@
-version: "3"
+version: "3.8"
 services:
-  pos_app:
-    build: .
-    image: elleined/pos_api
-    container_name: pos_app
-    restart: always
+  point_of_sale_api:
+    image: elleined/point-of-sale-api:latest
+    container_name: point_of_sale_api
     ports:
       - "8065:8065"
-    environment:
-      - MYSQL_HOST=mysql_server
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=root
-      - MYSQL_PORT=3306
-      - MYSQL_DATABASE=pos_db
-      - PORT=8065
+    env_file:
+      - .env
     networks:
       - pos_network
     depends_on:
@@ -33,13 +26,16 @@ services:
   mysql_server:
     image: mysql:8.0.32
     container_name: mysql_server
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=pos_db
-    healthcheck:
-      test: mysqladmin ping -h localhost -u root --password=$$MYSQL_ROOT_PASSWORD
+    env_file:
+      - mysql.env
     ports:
       - "3307:3306"
+    healthcheck:
+      test: mysqladmin ping -h localhost -u root --password=$$MYSQL_ROOT_PASSWORD
+      interval: 30s
+      timeout: 20s
+      retries: 3
+      start_period: 300s
     networks:
       - pos_network
 
